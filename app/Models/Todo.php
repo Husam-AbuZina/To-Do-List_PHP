@@ -10,4 +10,5 @@ class Todo extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'descroption', 'is_active']; // fillable means property make our database fillable columns
-}
+
+   }

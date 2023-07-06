@@ -23,6 +23,9 @@ class User extends Authenticatable
         'password',
     ];
 
+    //$user = User::find(1); // Replace 1 with the actual user ID or retrieve the user in any way you need
+    //return view('my-view', ['user' => $user]);
+
     /**
      * The attributes that should be hidden for serialization.
      *

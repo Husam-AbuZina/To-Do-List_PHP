@@ -40,7 +40,7 @@
                   </div>
                 @endif
 
-                <a class="btn btn-sm btn-info" href="{{ route('todos.create')}}">Add To-Do</a>
+                <a class="btn btn-sm btn-info"  href="{{ route('todos.create')}}">Add To-Do</a>
 
                 @if(count($todos) > 0)
     <table class="table">
@@ -50,6 +50,7 @@
                 <th scope="col">Description</th>
                 <th scope="col">Completed</th>
                 <th scope="col">Actions</th>
+                <th scope="col">AddedBy</th>
             </tr>
         </thead>
         <tbody>
@@ -74,6 +75,10 @@
                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                         </form>
                     </td>
+                    <td>
+                        {{ $todo['user']->name}}
+                    </td>
+
                 </tr>
             @endforeach
         </tbody>

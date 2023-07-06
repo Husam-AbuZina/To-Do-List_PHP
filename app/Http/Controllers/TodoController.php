@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoRequest;
 use App\Models\Todo;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
     public function index() {
-        $todos = Todo::all(); // we can get colums one by one, but used "all()" instead
+        $todos = Todo::get();
+        foreach($todos as $key){
+            $key['user'] = User::where('id',$key->user_id)->first(); // we can get colums one by one, but used "all()" instead
+        }
+        $userId = Auth::id();
         return view('todos.index', [
             'todos' => $todos
         ]);
@@ -20,31 +26,17 @@ class TodoController extends Controller
     }
 
     public function store(TodoRequest $request) { //first validate the user.
-        //use request vlass so you can get all of the fields of the form using thsi request
-        //return $request->description;
-
-
-        //.Todo:create($request->all()); //this line of code will threat your security //solution: using custom array
 
         $request->validated(); //safe way to take input from users
 
-        //.Todo::created($request->all()) //this isDangerious, users can append any text field (like SQL commands "SQL injection")
+        $todo = new Todo();
+        $todo->title = $request->title;
+        $todo->description = $request->description;
+        $todo->is_active = 0;
+        $todo->user_id = auth()->user()->id;
+        $todo->save();
 
-        //$request->validated(); // Undisable me in real life, i am security code.
-         // will take 2 inputs as condition to accept input from user.
-
-
-
-        Todo::create([
-            'title' => $request->title,   //name="title" in the form => it is a database column
-            'description' => $request->description,
-            'is_active' => 0
-        ]);
-
-        $request->session()->flash('alert-success', 'Todo Created Successfully'); //session name and session Value.
-// flash Helper
-        //return redirect()->route();  this code is before laravel 9
-        return to_route('todos.index');
+        return redirect()->route('todos.index')->with('success','تم اضافة المهمة بنجاح');
 
         //will accept all data coming form the form inside the "create.blade.php" file
         //model::create($request->all());

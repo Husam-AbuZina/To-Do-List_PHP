@@ -20,21 +20,23 @@
                     @endif
 
                     <!-- Create Post Form -->
+                    <div class="m-3">
+                        <form method="post" action="{{ route('todos.store') }}">
+                            @csrf
+                            {{-- this token verify that this info is sent from our app and not any app else --}}
+                            <div class="mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" name="title" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea name="description" class="form-control" cols="5" rows="5"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
 
-                    <form method="post" action="{{ route('todos.store') }}">
-                        @csrf
-                        {{-- this token verify that this info is sent from our app and not any app else --}}
-                        <div class="mb-3">
-                            <label class="form-label">Title</label>
-                            <input type="text" name="title" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea name="description" class="form-control" cols="5" rows="5"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
 
+                    </div>
                 </div>
             </div>
         </div>
